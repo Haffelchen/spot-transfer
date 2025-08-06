@@ -1,0 +1,21 @@
+name: spot-transfer
+
+services:
+  backend:
+    build: ./backend
+    container_name: spot-transfer-backend
+    ports:
+      - '8080:8080'
+    env_file:
+      - .env
+
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        - VITE_API_URL=http://127.0.0.1:8080
+    container_name: spot-transfer-frontend
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
